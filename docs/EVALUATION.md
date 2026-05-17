@@ -35,14 +35,14 @@
 - Variant B visual clarity (cream/indigo, open reports dashboard).
 - Transparent match scoring (“Why this match?”).
 - Trust features: verification detail, safe replies, official pickup info.
-- OSM map with pins supports M1 location focus.
+- OSM map with pins (WebView + Leaflet) supports M1 location focus.
 
 ## Limitations
 
 - No multi-device sync or real finder confirmation.
 - Rule-based “AI” is demo-only.
 - No German UI toggle in this build.
-- Map limited on web; native recommended for demo.
+- Map tab tested on Android (Expo Go); requires network for OSM tiles and Nominatim.
 
 ## Future improvements
 

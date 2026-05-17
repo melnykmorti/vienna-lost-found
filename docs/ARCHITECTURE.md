@@ -11,10 +11,13 @@ Persistence is **local only** via AsyncStorage; business logic lives in service 
 |---------|------|
 | expo-router | Navigation (tabs + stack) |
 | @react-native-async-storage/async-storage | Local persistence |
-| react-native-maps | Map view + markers |
+| react-native-webview | Map tab: hosts inline HTML with Leaflet |
 | expo-image-picker | Optional photos on reports |
 | react-native-qrcode-svg | Pickup QR code |
 | zustand | App hydration / refresh state |
+| OpenStreetMap Nominatim (HTTP) | Address search and geocoding in `AddressPicker` |
+
+`react-native-maps` is **not** used (removed after crashes with native map modules in Expo Go).
 
 ## Navigation
 
@@ -42,6 +45,8 @@ flowchart LR
   SVC --> ST[storage.ts]
   ST --> AS[AsyncStorage]
   SVC --> MAT[matching.ts]
+  UI --> GEO[geocoding.ts]
+  GEO --> NOM[Nominatim API]
 ```
 
 ## Backend (prototypisch)
@@ -51,5 +56,22 @@ Designed so a future REST API could replace `lostFoundService` internals without
 
 ## Maps
 
-OpenStreetMap raster tiles via `UrlTile` on `MapView`.  
-Item coordinates stored per found report; demo user position fixed at Karlsplatz.
+**Implementation:** `components/map/OsmMapView.tsx`
+
+1. React Native **`WebView`** loads a self-contained HTML document (string built in TypeScript).
+2. **Leaflet 1.9** and its CSS are loaded from unpkg inside that HTML.
+3. **OpenStreetMap** raster tiles: `https://tile.openstreetmap.org/{z}/{x}/{y}.png`.
+4. Markers: numbered `L.marker` pins for each found item; `L.circleMarker` for demo user at Karlsplatz.
+5. Native UI below the map: sorted list of items with distance; tap opens match detail.
+
+Found items store `coordinates` per report. Demo user position is fixed at Karlsplatz (`constants/locations.ts`). Distances use haversine in `matching.ts`.
+
+**Why WebView + Leaflet:** avoids native map SDK requirements and worked reliably on **Android (Expo Go / Pixel 6 emulator)** for the course demo.
+
+## Location input
+
+`components/location/AddressPicker.tsx` — used on Report Lost/Found:
+
+- Quick picks from `constants/viennaPlaces.ts`
+- Live search via `geocoding.ts` → Nominatim (throttled ~1 req/s, Austria bias)
+- Resolves label + coordinates before submit
