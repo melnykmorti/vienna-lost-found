@@ -1,5 +1,11 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
+# IDE / editor / local AI
+.idea/
+.vscode/
+.claude/
+*.iml
+
 # dependencies
 node_modules/
 
