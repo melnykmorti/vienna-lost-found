@@ -1,0 +1,122 @@
+[
+  {
+    "id": "found-wallet-1",
+    "title": "Dark wallet, billfold",
+    "description": "Brown leather billfold with brass stud, receipts inside",
+    "category": "wallet",
+    "locationLabel": "Karlsplatz, 1040 Wien",
+    "coordinates": { "lat": 48.201, "lng": 16.3728 },
+    "foundAt": "2026-04-17T19:05:00.000Z",
+    "aiTags": ["wallet", "brown", "leather", "billfold"],
+    "handoff": "depot",
+    "photoUri": null
+  },
+  {
+    "id": "found-umbrella-1",
+    "title": "Black umbrella, automatic",
+    "description": "Compact automatic umbrella with wood handle",
+    "category": "umbrella",
+    "locationLabel": "Stephansplatz, 1010 Wien",
+    "coordinates": { "lat": 48.2084, "lng": 16.3731 },
+    "foundAt": "2026-05-14T10:30:00.000Z",
+    "aiTags": ["umbrella", "black", "automatic"],
+    "handoff": "staff",
+    "photoUri": null
+  },
+  {
+    "id": "found-keys-1",
+    "title": "Silver keyring, 3 keys",
+    "description": "Three keys on a silver ring, blue plastic tag",
+    "category": "keys",
+    "locationLabel": "Praterstern, 1020 Wien",
+    "coordinates": { "lat": 48.2185, "lng": 16.3968 },
+    "foundAt": "2026-05-15T08:15:00.000Z",
+    "aiTags": ["keys", "silver", "keyring"],
+    "handoff": "depot",
+    "photoUri": null
+  },
+  {
+    "id": "found-scarf-1",
+    "title": "Wool scarf, grey",
+    "description": "Soft grey wool scarf left on seat",
+    "category": "clothing",
+    "locationLabel": "Landhausgasse 1, 1010 Wien",
+    "coordinates": { "lat": 48.2107, "lng": 16.3612 },
+    "foundAt": "2026-05-16T17:45:00.000Z",
+    "aiTags": ["scarf", "grey", "wool"],
+    "handoff": "staff",
+    "photoUri": null
+  },
+  {
+    "id": "found-phone-1",
+    "title": "Phone in black case",
+    "description": "Smartphone in matte black case, cracked corner",
+    "category": "phone",
+    "locationLabel": "Westbahnhof, 1150 Wien",
+    "coordinates": { "lat": 48.1962, "lng": 16.337 },
+    "foundAt": "2026-05-16T12:00:00.000Z",
+    "aiTags": ["phone", "black", "case"],
+    "handoff": "depot",
+    "photoUri": null
+  },
+  {
+    "id": "found-glasses-1",
+    "title": "Reading glasses",
+    "description": "Thin metal frame reading glasses in soft pouch",
+    "category": "glasses",
+    "locationLabel": "Museumsquartier, 1070 Wien",
+    "coordinates": { "lat": 48.2035, "lng": 16.359 },
+    "foundAt": "2026-05-17T09:20:00.000Z",
+    "aiTags": ["glasses", "metal", "pouch"],
+    "handoff": "depot",
+    "photoUri": null
+  },
+  {
+    "id": "found-bag-1",
+    "title": "Small canvas tote",
+    "description": "Beige canvas tote with bookstore logo",
+    "category": "bag",
+    "locationLabel": "Wiener Staatsoper, 1010 Wien",
+    "coordinates": { "lat": 48.2028, "lng": 16.3691 },
+    "foundAt": "2026-05-17T11:00:00.000Z",
+    "aiTags": ["bag", "canvas", "beige"],
+    "handoff": "staff",
+    "photoUri": null
+  },
+  {
+    "id": "found-wallet-2",
+    "title": "Leather pouch",
+    "description": "Small dark leather pouch, zipper",
+    "category": "wallet",
+    "locationLabel": "Wien Hauptbahnhof, 1100 Wien",
+    "coordinates": { "lat": 48.1851, "lng": 16.3769 },
+    "foundAt": "2026-04-17T20:30:00.000Z",
+    "aiTags": ["pouch", "leather", "zipper"],
+    "handoff": "depot",
+    "photoUri": null
+  },
+  {
+    "id": "found-keys-2",
+    "title": "Bike lock key",
+    "description": "Single key with red ribbon",
+    "category": "keys",
+    "locationLabel": "Naschmarkt, 1060 Wien",
+    "coordinates": { "lat": 48.1988, "lng": 16.3656 },
+    "foundAt": "2026-05-17T13:00:00.000Z",
+    "aiTags": ["key", "bike", "red"],
+    "handoff": "depot",
+    "photoUri": null
+  },
+  {
+    "id": "found-umbrella-2",
+    "title": "Compact red umbrella",
+    "description": "Folded red umbrella, travel size",
+    "category": "umbrella",
+    "locationLabel": "Schloss Schönbrunn, 1130 Wien",
+    "coordinates": { "lat": 48.1858, "lng": 16.3127 },
+    "foundAt": "2026-05-15T14:30:00.000Z",
+    "aiTags": ["umbrella", "red", "compact"],
+    "handoff": "depot",
+    "photoUri": null
+  }
+]

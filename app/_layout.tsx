@@ -1,58 +1,97 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { ThemeProvider } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
+import "react-native-reanimated";
 
-import { useColorScheme } from '@/components/useColorScheme';
+import { navigationTheme } from "@/constants/theme";
+import { theme } from "@/constants/theme";
+import { useAppStore } from "@/store/appStore";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: "(tabs)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
+  const { hydrate, ready } = useAppStore();
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
+    void hydrate();
+  }, [hydrate]);
+
+  useEffect(() => {
+    if (loaded && ready) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, ready]);
 
-  if (!loaded) {
-    return null;
+  if (!loaded || !ready) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: theme.cream,
+        }}
+      >
+        <ActivityIndicator size="large" color={theme.indigo} />
+      </View>
+    );
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+    <ThemeProvider value={navigationTheme}>
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: theme.cream },
+          headerTintColor: theme.indigo,
+          headerTitleStyle: {
+            fontFamily: "serif",
+            fontWeight: "600",
+          },
+          contentStyle: { backgroundColor: theme.cream },
+        }}
+      >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="report/lost" options={{ title: "Report lost" }} />
+        <Stack.Screen name="report/found" options={{ title: "Report found" }} />
+        <Stack.Screen
+          name="matches/[reportId]"
+          options={{ title: "Matches" }}
+        />
+        <Stack.Screen
+          name="match/[foundId]"
+          options={{ title: "Match detail" }}
+        />
+        <Stack.Screen
+          name="claim/verify"
+          options={{ title: "Verify ownership" }}
+        />
+        <Stack.Screen
+          name="claim/progress"
+          options={{ title: "Claim status" }}
+        />
+        <Stack.Screen name="claim/pickup" options={{ title: "Pick up item" }} />
+        <Stack.Screen
+          name="contact/safe-replies"
+          options={{ title: "Safe replies" }}
+        />
       </Stack>
     </ThemeProvider>
   );

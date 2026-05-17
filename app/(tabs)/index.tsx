@@ -1,31 +1,103 @@
-import { StyleSheet } from 'react-native';
+import { useRouter } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { ReportCard } from "@/components/reports/ReportCard";
+import { Card } from "@/components/ui/Card";
+import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { Screen } from "@/components/ui/Screen";
+import { theme } from "@/constants/theme";
+import { useAppData } from "@/hooks/useAppData";
+import { rankMatches } from "@/services/matching";
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
+  const router = useRouter();
+  const { reports, foundItems } = useAppData();
+
+  const openReports = reports.filter((r) => r.status !== "returned");
+  const hasStrongMatch = openReports.some((r) => {
+    const { top } = rankMatches(r, foundItems);
+    return top[0]?.score >= 70;
+  });
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <Screen
+      title="Vienna Lost & Found"
+      subtitle="Lost something in Vienna? We help you report, match, and recover items."
+    >
+      {hasStrongMatch ? (
+        <Card
+          accent
+          onPress={() =>
+            openReports[0] && router.push(`/matches/${openReports[0].id}`)
+          }
+        >
+          <Text style={styles.notifyTitle}>We found a possible match</Text>
+          <Text style={styles.notifyBody}>
+            Tap to review likely matches for your open report.
+          </Text>
+        </Card>
+      ) : null}
+
+      <View style={styles.actions}>
+        <PrimaryButton
+          label="Report Lost"
+          onPress={() => router.push("/report/lost")}
+          style={styles.half}
+        />
+        <PrimaryButton
+          label="Report Found"
+          variant="secondary"
+          onPress={() => router.push("/report/found")}
+          style={styles.half}
+        />
+      </View>
+
+      <Text style={styles.section}>Your open reports</Text>
+      {openReports.length === 0 ? (
+        <Text style={styles.empty}>
+          No open reports. Start with Report Lost or Found.
+        </Text>
+      ) : (
+        openReports.map((r) => <ReportCard key={r.id} report={r} />)
+      )}
+
+      <View style={styles.quick}>
+        <PrimaryButton
+          label="Search catalog"
+          variant="ghost"
+          onPress={() => router.push("/(tabs)/search")}
+        />
+        <PrimaryButton
+          label="Map of pins"
+          variant="ghost"
+          onPress={() => router.push("/(tabs)/map")}
+        />
+      </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  notifyTitle: {
+    color: theme.white,
+    fontSize: 17,
+    fontWeight: "700",
+    marginBottom: 6,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  notifyBody: {
+    color: "rgba(255,255,255,0.9)",
+    fontSize: 14,
+    lineHeight: 20,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  actions: { flexDirection: "row", gap: 10, marginBottom: 24 },
+  half: { flex: 1 },
+  section: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: theme.ink,
+    marginBottom: 12,
+    fontFamily: "serif",
   },
+  empty: { color: theme.muted, marginBottom: 16 },
+  quick: { marginTop: 8, gap: 4 },
 });

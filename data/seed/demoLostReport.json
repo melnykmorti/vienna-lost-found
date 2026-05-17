@@ -1,0 +1,13 @@
+{
+  "id": "lost-demo-wallet",
+  "title": "Black leather wallet",
+  "category": "wallet",
+  "description": "Black leather wallet, billfold, brass stud, receipts inside",
+  "locationLabel": "Karlsplatz, 1040 Wien",
+  "coordinates": { "lat": 48.201, "lng": 16.3728 },
+  "lostAt": "2026-04-17T18:30:00.000Z",
+  "photoUri": null,
+  "notifyOnMatch": true,
+  "status": "searching",
+  "createdAt": "2026-04-17T18:35:00.000Z"
+}
