@@ -37,6 +37,9 @@ export default function ClaimProgressScreen() {
     );
   }
 
+  const rejected = claim.verifyResult === "rejected";
+  const partial = claim.verifyResult === "partial";
+
   const canContinue =
     claim.status === "verified" ||
     claim.status === "ready_pickup" ||
@@ -44,10 +47,29 @@ export default function ClaimProgressScreen() {
 
   return (
     <Screen
-      title="Claim request started"
-      subtitle="Verification in progress…"
+      title={
+        rejected ? "Verification needs more detail" : "Claim request started"
+      }
+      subtitle={
+        rejected
+          ? "Your answer was too general for this item."
+          : "Verification in progress…"
+      }
       footer={
-        canContinue ? (
+        rejected ? (
+          <PrimaryButton
+            label="Try again"
+            onPress={() =>
+              router.push({
+                pathname: "/claim/verify",
+                params: {
+                  reportId: claim.lostReportId,
+                  foundId: claim.foundId,
+                },
+              })
+            }
+          />
+        ) : canContinue ? (
           <PrimaryButton
             label={
               claim.safeReply
@@ -73,10 +95,24 @@ export default function ClaimProgressScreen() {
         )
       }
     >
+      {claim.verifyMessage ? (
+        <Text
+          style={[
+            styles.feedback,
+            rejected && styles.feedbackRejected,
+            partial && styles.feedbackPartial,
+          ]}
+        >
+          {claim.verifyMessage}
+        </Text>
+      ) : null}
+
       <ProgressSteps steps={claim.steps} />
-      <Text style={styles.note}>
-        Wiener Linien Fundbüro will ask 2 questions only the owner would know.
-      </Text>
+      {!rejected ? (
+        <Text style={styles.note}>
+          Wiener Linien Fundbüro will ask 2 questions only the owner would know.
+        </Text>
+      ) : null}
       <PrimaryButton
         label="Save for later"
         variant="ghost"
@@ -89,5 +125,13 @@ export default function ClaimProgressScreen() {
 const styles = StyleSheet.create({
   muted: { color: theme.muted },
   wait: { textAlign: "center", color: theme.muted },
+  feedback: {
+    marginBottom: 12,
+    color: theme.muted,
+    lineHeight: 22,
+    fontSize: 14,
+  },
+  feedbackPartial: { color: theme.warning },
+  feedbackRejected: { color: theme.warning },
   note: { marginTop: 8, color: theme.muted, lineHeight: 22 },
 });

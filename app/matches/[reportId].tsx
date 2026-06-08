@@ -51,10 +51,6 @@ export default function MatchesScreen() {
       title={`${list.length} likely matches`}
       subtitle={`${report.title} · ${report.locationLabel}`}
     >
-      <Text style={styles.demo}>
-        (i) Demo matching — rule-based scoring, not machine learning.
-      </Text>
-
       {list.length === 0 ? (
         <Text style={styles.muted}>
           No matches yet. Check again after more found reports.
@@ -89,12 +85,6 @@ export default function MatchesScreen() {
 }
 
 const styles = StyleSheet.create({
-  demo: {
-    fontSize: 12,
-    color: theme.muted,
-    marginBottom: 16,
-    fontStyle: "italic",
-  },
   muted: { color: theme.muted },
   gap: { height: 12 },
 });

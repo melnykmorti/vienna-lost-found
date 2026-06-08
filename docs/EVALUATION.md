@@ -2,13 +2,13 @@
 
 ## Link to M1 use cases
 
-| M1 task | Prototype support |
-|---------|-------------------|
-| Create lost report | Report Lost — single screen, categories, optional photo |
-| Create found report | Report Found — AI tags (demo), handoff choice |
-| Search for matches | Proactive matches from open report + Search catalog + Map |
-| Safe contact | Safe replies screen — preset phrases only |
-| Verify ownership | Unique detail + progress timeline before pickup |
+| M1 task             | Prototype support                                         |
+| ------------------- | --------------------------------------------------------- |
+| Create lost report  | Report Lost — single screen, categories, optional photo   |
+| Create found report | Report Found — AI tags (demo), handoff choice             |
+| Search for matches  | Proactive matches from open report + Search catalog + Map |
+| Safe contact        | Safe replies screen — preset phrases only                 |
+| Verify ownership    | Unique detail + progress timeline before pickup           |
 
 ## Persona walkthroughs
 
@@ -44,8 +44,18 @@
 - No German UI toggle in this build.
 - Map tab tested on Android (Expo Go); requires network for OSM tiles and Nominatim.
 
+## M4 improvements (post usability study)
+
+| Finding                           | Change in prototype                                         |
+| --------------------------------- | ----------------------------------------------------------- |
+| Match score unclear (6/8 users)   | Tier labels + green/yellow/grey score bar on matches        |
+| Verification too vague (critical) | Good-examples block; partial acceptance; retry on rejection |
+| “Other” too broad                 | Added Keychain and ID/Card categories                       |
+| No onboarding (minor)             | Deferred — needs separate UI + retest cycle                 |
+
 ## Future improvements
 
+- First-run onboarding tour (identified in M4 study).
 - Real backend + accounts; push on match.
 - ML image tagging; staff verification (Maria persona).
 - DE/EN localization; Wiener Linien API integration.

@@ -92,7 +92,15 @@ export default function MatchDetailScreen() {
       <Text style={styles.meta}>
         {item.locationLabel} · {new Date(item.foundAt).toLocaleString()}
       </Text>
-      {match && match.score > 0 ? <ScoreBar score={match.score} /> : null}
+      {match && match.score > 0 ? (
+        <ScoreBar score={match.score} showLabel />
+      ) : null}
+
+      {match && match.score > 0 ? (
+        <Text style={styles.scoreHint}>
+          Score reflects category, location, and description overlap.
+        </Text>
+      ) : null}
 
       <Text style={styles.section}>Why this match?</Text>
       {(match?.reasons ?? []).map((r) => (
@@ -127,6 +135,13 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   meta: { color: theme.muted, marginBottom: 16 },
+  scoreHint: {
+    fontSize: 12,
+    color: theme.muted,
+    marginTop: 8,
+    marginBottom: 4,
+    lineHeight: 18,
+  },
   section: {
     fontSize: 17,
     fontWeight: "600",

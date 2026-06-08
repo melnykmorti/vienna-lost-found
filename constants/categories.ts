@@ -3,6 +3,8 @@ import type { ItemCategory } from "@/types/models";
 export const CATEGORIES: { id: ItemCategory; label: string }[] = [
   { id: "wallet", label: "Wallet" },
   { id: "keys", label: "Keys" },
+  { id: "keychain", label: "Keychain" },
+  { id: "id_card", label: "ID / Card" },
   { id: "phone", label: "Phone" },
   { id: "bag", label: "Bag" },
   { id: "glasses", label: "Glasses" },

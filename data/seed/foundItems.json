@@ -97,13 +97,13 @@
   },
   {
     "id": "found-keys-2",
-    "title": "Bike lock key",
-    "description": "Single key with red ribbon",
-    "category": "keys",
+    "title": "Keychain with red ribbon",
+    "description": "Small metal keychain with red ribbon and two keys",
+    "category": "keychain",
     "locationLabel": "Naschmarkt, 1060 Wien",
     "coordinates": { "lat": 48.1988, "lng": 16.3656 },
     "foundAt": "2026-05-17T13:00:00.000Z",
-    "aiTags": ["key", "bike", "red"],
+    "aiTags": ["keychain", "ribbon", "red"],
     "handoff": "depot",
     "photoUri": null
   },

@@ -1,6 +1,8 @@
 export type ItemCategory =
   | "wallet"
   | "keys"
+  | "keychain"
+  | "id_card"
   | "phone"
   | "bag"
   | "glasses"
@@ -18,6 +20,8 @@ export type LostReportStatus =
 export type HandoffType = "depot" | "staff";
 
 export type ClaimStatus = "pending" | "verified" | "ready_pickup" | "completed";
+
+export type VerifyResult = "accepted" | "partial" | "rejected";
 
 export interface Coordinates {
   lat: number;
@@ -78,6 +82,8 @@ export interface Claim {
   steps: ClaimStep[];
   qrPayload: string;
   safeReply?: string;
+  verifyResult?: VerifyResult;
+  verifyMessage?: string;
   createdAt: string;
 }
 

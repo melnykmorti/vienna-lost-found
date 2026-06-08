@@ -1,12 +1,19 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { Screen } from "@/components/ui/Screen";
 import { theme } from "@/constants/theme";
 import { lostFoundService } from "@/services/lostFoundService";
 import { useAppStore } from "@/store/appStore";
+
+const EXAMPLES = [
+  "Engraving or initials inside",
+  "A specific receipt or card",
+  "A scratch or mark in a corner",
+  "Color alone is usually not enough",
+];
 
 export default function VerifyClaimScreen() {
   const { reportId, foundId } = useLocalSearchParams<{
@@ -46,6 +53,15 @@ export default function VerifyClaimScreen() {
         />
       }
     >
+      <View style={styles.examplesBox}>
+        <Text style={styles.examplesTitle}>Good examples</Text>
+        {EXAMPLES.map((line) => (
+          <Text key={line} style={styles.exampleLine}>
+            • {line}
+          </Text>
+        ))}
+      </View>
+
       <Text style={styles.label}>Describe a unique detail</Text>
       <TextInput
         style={styles.input}
@@ -56,13 +72,32 @@ export default function VerifyClaimScreen() {
         placeholderTextColor={theme.muted}
       />
       <Text style={styles.hint}>
-        Demo: verification auto-completes in ~2 seconds after submit.
+        Accepted details are checked against the found-item record. Demo
+        verification completes in ~2 seconds when accepted.
       </Text>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  examplesBox: {
+    backgroundColor: theme.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.border,
+    padding: 14,
+    marginBottom: 16,
+  },
+  examplesTitle: {
+    fontWeight: "600",
+    color: theme.ink,
+    marginBottom: 8,
+  },
+  exampleLine: {
+    color: theme.muted,
+    fontSize: 14,
+    lineHeight: 22,
+  },
   label: { fontWeight: "600", marginBottom: 8, color: theme.ink },
   input: {
     backgroundColor: theme.white,
@@ -78,6 +113,6 @@ const styles = StyleSheet.create({
     marginTop: 12,
     fontSize: 13,
     color: theme.muted,
-    fontStyle: "italic",
+    lineHeight: 20,
   },
 });

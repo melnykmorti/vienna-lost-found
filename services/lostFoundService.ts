@@ -1,6 +1,7 @@
 import { categoryLabel } from "@/constants/categories";
 import { rankMatches } from "@/services/matching";
 import { storage } from "@/services/storage";
+import { evaluateSecretDetail } from "@/services/verification";
 import type {
   Claim,
   ClaimStatus,
@@ -128,27 +129,59 @@ export const lostFoundService = {
     foundId: string,
     secretDetail: string,
   ): Promise<Claim> {
-    const claim: Claim = {
-      id: id("claim"),
-      lostReportId,
-      foundId,
+    const found = await this.getFoundItem(foundId);
+    const evaluation = evaluateSecretDetail(
       secretDetail,
-      status: "pending",
-      steps: defaultClaimSteps(),
-      qrPayload: "",
-      createdAt: new Date().toISOString(),
-    };
-    claim.qrPayload = `VLF-${claim.id}`;
+      found?.description ?? "",
+    );
 
     const claims = await storage.getClaims();
-    claims.unshift(claim);
-    await storage.setClaims(claims);
+    const existingIdx = claims.findIndex(
+      (c) =>
+        c.lostReportId === lostReportId &&
+        c.foundId === foundId &&
+        c.verifyResult === "rejected",
+    );
 
+    const now = new Date().toISOString();
+    let claim: Claim;
+
+    if (existingIdx >= 0) {
+      claim = {
+        ...claims[existingIdx],
+        secretDetail,
+        status: "pending",
+        steps: defaultClaimSteps(),
+        verifyResult: evaluation.result,
+        verifyMessage: evaluation.message,
+        safeReply: undefined,
+      };
+      claims[existingIdx] = claim;
+    } else {
+      claim = {
+        id: id("claim"),
+        lostReportId,
+        foundId,
+        secretDetail,
+        status: "pending",
+        steps: defaultClaimSteps(),
+        qrPayload: "",
+        createdAt: now,
+        verifyResult: evaluation.result,
+        verifyMessage: evaluation.message,
+      };
+      claim.qrPayload = `VLF-${claim.id}`;
+      claims.unshift(claim);
+    }
+
+    await storage.setClaims(claims);
     await this.updateReportStatus(lostReportId, "matched");
 
-    setTimeout(() => {
-      void this.advanceClaimVerification(claim.id);
-    }, 2000);
+    if (evaluation.result === "accepted" || evaluation.result === "partial") {
+      setTimeout(() => {
+        void this.advanceClaimVerification(claim.id);
+      }, 2000);
+    }
 
     return claim;
   },

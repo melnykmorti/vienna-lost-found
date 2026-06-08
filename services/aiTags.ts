@@ -3,6 +3,8 @@ import type { ItemCategory } from "@/types/models";
 const CATEGORY_TAGS: Record<ItemCategory, string[]> = {
   wallet: ["wallet", "leather", "cards"],
   keys: ["keys", "keyring", "metal"],
+  keychain: ["keychain", "charm", "keyring"],
+  id_card: ["id", "card", "student"],
   phone: ["phone", "smartphone", "case"],
   bag: ["bag", "tote", "fabric"],
   glasses: ["glasses", "frames", "optical"],
